@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout (~{::body},'vets')}">
+
+<body>
+
+<style>
+    body {
+        background: linear-gradient(135deg, #1e3c72, #2a5298);
+        min-height: 100vh;
+    }
+
+    .page-title {
+        color: white;
+        font-weight: 700;
+        letter-spacing: 1px;
+    }
+
+    .card-custom {
+        border-radius: 20px;
+        backdrop-filter: blur(10px);
+        background: rgba(255, 255, 255, 0.95);
+        box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        transition: all 0.3s ease;
+    }
+
+    .card-custom:hover {
+        transform: translateY(-3px);
+    }
+
+    .table thead {
+        background: linear-gradient(45deg, #0f2027, #203a43, #2c5364);
+        color: white;
+        font-weight: 600;
+    }
+
+    .table tbody tr {
+        transition: all 0.2s ease-in-out;
+    }
+
+    .table tbody tr:hover {
+        background-color: #f1f5ff;
+        transform: scale(1.01);
+    }
+
+    .badge-specialty {
+        background: linear-gradient(45deg, #11998e, #38ef7d);
+        border-radius: 30px;
+        padding: 6px 12px;
+        font-size: 0.8rem;
+        font-weight: 500;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .empty-text {
+        color: #999;
+        font-style: italic;
+    }
+</style>
+
+<div class="container py-5">
+
+    <!-- Title -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="page-title">
+            <i class="bi bi-person-badge-fill"></i> Our Veterinarians
+        </h2>
+    </div>
+
+    <!-- Card wrapper -->
+    <div class="card card-custom p-4">
+
+        <table id="vets" class="table align-middle">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Specialties</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="vet : ${vets.vetList}">
+
+                <!-- Vet Name -->
+                <td class="fw-semibold fs-5 text-dark"
+                    th:text="${vet.firstName + ' ' + vet.lastName}">
+                </td>
+
+                <!-- Specialties -->
+                <td>
+                    <span th:each="specialty : ${vet.specialties}"
+                          class="badge badge-specialty me-2"
+                          th:text="${specialty.name}">
+                    </span>
+
+                    <span th:if="${vet.nrOfSpecialties == 0}"
+                          class="empty-text">
+                        none
+                    </span>
+                </td>
+
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+</div>
+
+</body>
+</html>
